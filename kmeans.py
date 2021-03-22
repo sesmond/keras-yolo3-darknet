@@ -76,9 +76,9 @@ class YOLO_Kmeans:
             length = len(infos)
             for i in range(1, length):
                 width = int(infos[i].split(",")[2]) - \
-                    int(infos[i].split(",")[0])
+                        int(infos[i].split(",")[0])
                 height = int(infos[i].split(",")[3]) - \
-                    int(infos[i].split(",")[1])
+                         int(infos[i].split(",")[1])
                 dataSet.append([width, height])
         result = np.array(dataSet)
         f.close()
@@ -99,3 +99,4 @@ if __name__ == "__main__":
     filename = "2012_train.txt"
     kmeans = YOLO_Kmeans(cluster_number, filename)
     kmeans.txt2clusters()
+    # 这是为了计算anchor用的
