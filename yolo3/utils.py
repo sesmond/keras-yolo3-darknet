@@ -5,6 +5,7 @@ from functools import reduce
 from PIL import Image
 import numpy as np
 from matplotlib.colors import rgb_to_hsv, hsv_to_rgb
+import os
 
 
 def compose(*funcs):
@@ -37,14 +38,25 @@ def rand(a=0, b=1):
     return np.random.rand() * (b - a) + a
 
 
-def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jitter=.3, hue=.1, sat=1.5, val=1.5,
+def get_random_data(image_dir, annotation_line, input_shape, random=True, max_boxes=20, jitter=.3, hue=.1, sat=1.5,
+                    val=1.5,
                     proc_img=True):
-    '''
-    random preprocessing for real-time data augmentation
-    '''
+    """
+        random preprocessing for real-time data augmentation
+
+    @param image_dir: 图片路径
+    @param annotation_line:
+    @param input_shape:
+    @param random:
+    @param max_boxes:
+    @param jitter:
+    @param hue:
+    @param sat:
+    @param val:
+    @param proc_img:
+    @return:
+    """
     line = annotation_line.split()
-    import os
-    image_dir = "../dataset/cigarette/images"
     img_path = os.path.join(image_dir, line[0])
     image = Image.open(img_path)
     iw, ih = image.size

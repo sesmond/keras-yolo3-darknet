@@ -22,8 +22,16 @@ def generate_log_name():
     return log_file_name
 
 
+def get_train_data_path():
+    paths = open("cfg/train_data.cfg", "r").readlines()
+    for sel_type in paths:
+        sel_type = sel_type.rstrip('\n')
+        label_path, image_dir = sel_type.split(" ")
+        return label_path, image_dir
+
+
 def _main():
-    annotation_path = 'data/train.txt'
+    annotation_path, _ = get_train_data_path()
     log_base_dir = 'logs/'
     log_name = generate_log_name()
     tboard_dir = os.path.join(log_base_dir, 'tboard', log_name)
@@ -200,6 +208,8 @@ def data_generator(annotation_lines, batch_size, input_shape, anchors, num_class
     """
         data generator for fit_generator
     """
+    # 参与训练的所有图片名
+    _, image_dir = get_train_data_path()
     n = len(annotation_lines)
     i = 0
     while True:
@@ -208,7 +218,7 @@ def data_generator(annotation_lines, batch_size, input_shape, anchors, num_class
         for b in range(batch_size):
             if i == 0:
                 np.random.shuffle(annotation_lines)
-            image, box = get_random_data(annotation_lines[i], input_shape, random=True)
+            image, box = get_random_data(image_dir, annotation_lines[i], input_shape, random=True)
             image_data.append(image)
             box_data.append(box)
             i = (i + 1) % n
