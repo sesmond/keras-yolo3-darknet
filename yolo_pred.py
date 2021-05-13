@@ -1,9 +1,10 @@
+import os
 import sys
 import argparse
+
+from utils import file_utils
 from yolo import YOLO, detect_video
 from PIL import Image
-import cv2
-import numpy as np
 
 
 def show(img, title='无标题'):
@@ -13,7 +14,6 @@ def show(img, title='无标题'):
     @param title:
     @return:
     '''
-    # img = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2BGR)
     import matplotlib.pyplot as plt
     plt.imshow(img)
     plt.show()
@@ -25,16 +25,19 @@ def detect_img(yolo):
         if cnt > 3:
             break
         cnt += 1
-        img_p = input('Input image filename:')
-        try:
-            image = Image.open(img_p)
-            show(image)
-        except:
-            print('Open Error! Try again!')
-            continue
-        else:
+        img_p = input('Input image path:')
+        files = file_utils.get_files(img_p)
+        print("路径：", img_p, "中图片数量：", len(files))
+        output_path = input('output image path:')
+        for fp in files:
+            print("预测图片：", fp)
+            image = Image.open(fp)
             r_image = yolo.detect_image(image)
-            show(r_image)
+            base_name = os.path.basename(fp)
+            r_image.save(os.path.join(output_path, base_name))
+            is_continue = input("是否继续：y/n")
+            if is_continue == 'n':
+                break
     yolo.close_session()
 
 

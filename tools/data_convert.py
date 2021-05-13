@@ -43,10 +43,8 @@ def xml_to_csv(path, output_path):
 
 
 def main():
-    root_path = "../../dataset/raccoon_dataset"
     root_path = "../../dataset/cigarette"
     anno_path = os.path.join(root_path, 'annotations')
-    output_path = "data"
     output_path = os.path.join(root_path, "data")
     xml_to_csv(anno_path, output_path)
 
