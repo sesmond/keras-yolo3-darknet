@@ -2,17 +2,14 @@
 # -*- encoding: utf-8 -*-
 '''
 @Title   : 文件操作工具类
-@File    :   file_utils.py    
+@File    :   file_utils.py
 @Author  : vincent
 @Time    : 2020/6/3 9:40 上午
-@Version : 1.0 
+@Version : 1.0
 '''
-import os
 import glob
-
 import logging
-
-from utils import date_utils
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -79,20 +76,6 @@ def get_files(data_path, exts=['jpg', 'png', 'jpeg', 'JPG']):
 
 def listdir_nohidden(path):
     return glob.glob(os.path.join(path, '*'))
-
-
-def get_modify_time(file_list):
-    """
-    获取文件夹或文件的最后修改时间
-    @param file_list:
-    @return:
-    """
-    time_list = []
-    for file in file_list:
-        time_secs = os.path.getmtime(file)
-        time_str = date_utils.secondsToDatetime(time_secs)
-        time_list.append(time_str)
-    return time_list
 
 
 def check_path(path):
